@@ -16,20 +16,22 @@ Data::UUID::NCName - Make valid NCName tokens which are also UUIDs
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
     use Data::UUID::NCName qw(:all);
 
-    my $uuid = '1ff916f3-6ed7-443a-bef5-f4c85f18cd10';
-    my $ncn  = to_ncname($uuid);
+    my $uuid  = '1ff916f3-6ed7-443a-bef5-f4c85f18cd10';
+    my $ncn   = to_ncname($uuid);
+    my $ncn32 = to_ncname($uuid, 32);
 
     # $ncn is now "EH_kW827XQ6vvX0yF8YzRA".
+    # $ncn32 is "Ed74rn43o25b2x327jsc7ddgra" and case-insensitive.
 
     # from Test::More, this will output 'ok':
     is(from_ncname($ncn), $uuid, 'Decoding result matches original');
@@ -47,7 +49,8 @@ them.
 The UUID is a generic identifier which is large enough to be globally
 unique. This makes it useful as a canonical name for data objects in
 distributed systems, especially those that cross administrative
-jurisdictions, such as the World-Wide Web. The L<representation>,
+jurisdictions, such as the World-Wide Web. The
+L<representation|http://tools.ietf.org/html/rfc4122#section-3>,
 however, of the UUID, precludes it from being used in many places
 where it would be useful to do so.
 
@@ -133,14 +136,14 @@ version|http://www.w3.org/TeamSubmission/turtle/#nodeID> listing a
 production equivalent to the more conservative NCName. NTriples
 syntax is L<even more
 constrained|http://www.w3.org/TR/rdf-testcases/#ntriples>, given as
-C<[A-Za-z][0-9A-Za-z]*>.
+C<^[A-Za-z][0-9A-Za-z]*$>.
 
 =item Generated symbols
 
 =over 4
 
 There are only two hard things in computer science: cache
-invalidation, naming things [and off-by-one errors].
+invalidation and naming things [and off-by-one errors].
 
 -- Phil Karlton [extension of unknown origin]
 
@@ -158,7 +161,7 @@ other languages, or transplanted into the more conventional packages
 of programs, libraries and frameworks. The Base32 UUID NCName
 representation should be adequate for placeholder symbols in just
 about any programming language, save for those which do not permit
-identifiers as long as 26 characters (of which there are few).
+identifiers as long as 26 characters (which are extremely scarce).
 
 =back
 
@@ -389,7 +392,7 @@ The function will return C<undef> immediately if it cannot match
 either of these patterns. Input past the 21-character mark (for
 Base64) or 25-character mark (for Base32) is ignored.
 
-This function returns a UUID of type C<$FORMAT>, which if not left
+This function returns a UUID of type C<$FORMAT>, which if left
 undefined, must be one of the following:
 
 =over 4

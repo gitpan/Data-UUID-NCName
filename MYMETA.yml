@@ -22,4 +22,4 @@ requires:
   MIME::Base32: 0
   MIME::Base64: 0
   perl: 5.008
-version: 0.01
+version: 0.02
