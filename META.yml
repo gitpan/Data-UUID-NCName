@@ -4,6 +4,7 @@ author:
   - 'Dorian Taylor, C<< <dorian at cpan.org> >>'
   - 'Dorian Taylor <dorian@cpan.org>'
 build_requires:
+  Data::UUID: 0
   ExtUtils::MakeMaker: 6.59
   Test::More: 0
 configure_requires:
@@ -26,4 +27,4 @@ requires:
   perl: 5.8.0
 resources:
   license: http://apache.org/licenses/LICENSE-2.0
-version: 0.02
+version: 0.03
